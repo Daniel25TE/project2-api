@@ -1,17 +1,16 @@
-const { getDatabase } = require('../db/database');
 const { ObjectId } = require('mongodb');
+const { getDatabase } = require('../db/database');
 
-
-const getAllEmployees = async (req, res) => {
+const getAllEmployees = async (req, res, next) => {
   try {
     const employees = await getDatabase().collection('Employees').find().toArray();
     res.status(200).json(employees);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching employees' });
+    next(err);
   }
 };
 
-const getEmployeeById = async (req, res) => {
+const getEmployeeById = async (req, res, next) => {
   const id = req.params.id;
 
   try {
@@ -20,16 +19,18 @@ const getEmployeeById = async (req, res) => {
       .findOne({ _id: new ObjectId(id) });
 
     if (!employee) {
-      return res.status(404).json({ message: 'Employee not found' });
+      const error = new Error('Employee not found');
+      error.status = 404;
+      throw error;
     }
 
     res.status(200).json(employee);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching employee' });
+    next(err);
   }
 };
 
-const createEmployee = async (req, res) => {
+const createEmployee = async (req, res, next) => {
   const employee = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -45,22 +46,66 @@ const createEmployee = async (req, res) => {
       .collection('Employees')
       .insertOne(employee);
 
-    if (response.acknowledged) {
-      res.status(201).json({
-        message: 'Employee created successfully',
-        employeeId: response.insertedId,
-      });
-    } else {
-      res.status(500).json({
-        message: 'Error inserting employee',
-      });
+    if (!response.acknowledged) {
+      const error = new Error('Failed to insert employee');
+      error.status = 500;
+      throw error;
     }
-  } catch (err) {
-    res.status(500).json({
-      message: 'Server error',
-      error: err.message,
+
+    res.status(201).json({
+      message: 'Employee created successfully',
+      employeeId: response.insertedId,
     });
+  } catch (err) {
+    next(err);
   }
 };
 
-module.exports = { getAllEmployees, createEmployee, getEmployeeById };
+const updateEmployee = async (req, res, next) => {
+  const id = req.params.id;
+  const updatedData = req.body;
+
+  try {
+    const result = await getDatabase()
+      .collection('Employees')
+      .updateOne({ _id: new ObjectId(id) }, { $set: updatedData });
+
+    if (result.matchedCount === 0) {
+      const error = new Error('Employee not found');
+      error.status = 404;
+      throw error;
+    }
+
+    res.status(200).json({ message: 'Employee updated successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteEmployee = async (req, res, next) => {
+  const id = req.params.id;
+
+  try {
+    const result = await getDatabase()
+      .collection('Employees')
+      .deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      const error = new Error('Employee not found');
+      error.status = 404;
+      throw error;
+    }
+
+    res.status(200).json({ message: 'Employee deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  getAllEmployees,
+  getEmployeeById,
+  createEmployee,
+  updateEmployee,
+  deleteEmployee,
+};

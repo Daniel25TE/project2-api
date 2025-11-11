@@ -1,17 +1,16 @@
-const { getDatabase } = require('../db/database');
 const { ObjectId } = require('mongodb');
+const { getDatabase } = require('../db/database');
 
-
-const getAllManagers = async (req, res) => {
+const getAllManagers = async (req, res, next) => {
   try {
     const managers = await getDatabase().collection('Managers').find().toArray();
     res.status(200).json(managers);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching managers' });
+    next(err);
   }
 };
 
-const getManagerById = async (req, res) => {
+const getManagerById = async (req, res, next) => {
   const id = req.params.id;
 
   try {
@@ -20,16 +19,18 @@ const getManagerById = async (req, res) => {
       .findOne({ _id: new ObjectId(id) });
 
     if (!manager) {
-      return res.status(404).json({ message: 'Manager not found' });
+      const error = new Error('Manager not found');
+      error.status = 404;
+      throw error;
     }
 
     res.status(200).json(manager);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching manager' });
+    next(err);
   }
 };
 
-const createManager = async (req, res) => {
+const createManager = async (req, res, next) => {
   const manager = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -45,23 +46,67 @@ const createManager = async (req, res) => {
       .collection('Managers')
       .insertOne(manager);
 
-    if (response.acknowledged) {
-      res.status(201).json({
-        message: 'Manager created successfully',
-        managerId: response.insertedId,
-      });
-    } else {
-      res.status(500).json({
-        message: 'Error inserting manager',
-      });
+    if (!response.acknowledged) {
+      const error = new Error('Failed to insert manager');
+      error.status = 500;
+      throw error;
     }
-  } catch (err) {
-    res.status(500).json({
-      message: 'Server error',
-      error: err.message,
+
+    res.status(201).json({
+      message: 'Manager created successfully',
+      managerId: response.insertedId,
     });
+  } catch (err) {
+    next(err);
   }
 };
 
-module.exports = { getAllManagers, createManager, getManagerById };
+const updateManager = async (req, res, next) => {
+  const id = req.params.id;
+  const updatedData = req.body;
+
+  try {
+    const result = await getDatabase()
+      .collection('Managers')
+      .updateOne({ _id: new ObjectId(id) }, { $set: updatedData });
+
+    if (result.matchedCount === 0) {
+      const error = new Error('Manager not found');
+      error.status = 404;
+      throw error;
+    }
+
+    res.status(200).json({ message: 'Manager updated successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteManager = async (req, res, next) => {
+  const id = req.params.id;
+
+  try {
+    const result = await getDatabase()
+      .collection('Managers')
+      .deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      const error = new Error('Manager not found');
+      error.status = 404;
+      throw error;
+    }
+
+    res.status(200).json({ message: 'Manager deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  getAllManagers,
+  getManagerById,
+  createManager,
+  updateManager,
+  deleteManager,
+};
 
