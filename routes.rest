@@ -1,0 +1,16 @@
+###
+GET http://localhost:3005/managers
+###
+POST http://localhost:3005/managers
+content-type: application/json
+
+
+{
+    "firstName": "Bob2",
+    "lastName": "Hartley",
+    "workEmail": "bobhartley@blackbox.com",
+    "title": "Manager",
+    "division": "Software engineering",
+    "area": "West Utah",
+    "jobType": "Full time"  
+}
