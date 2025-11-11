@@ -92,6 +92,36 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "workEmail": {
+                  "example": "any"
+                },
+                "title": {
+                  "example": "any"
+                },
+                "division": {
+                  "example": "any"
+                },
+                "area": {
+                  "example": "any"
+                },
+                "jobType": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -207,6 +237,36 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "workEmail": {
+                  "example": "any"
+                },
+                "title": {
+                  "example": "any"
+                },
+                "division": {
+                  "example": "any"
+                },
+                "manager": {
+                  "example": "any"
+                },
+                "jobType": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
