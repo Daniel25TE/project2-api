@@ -63,12 +63,21 @@ const createManager = async (req, res, next) => {
 
 const updateManager = async (req, res, next) => {
   const id = req.params.id;
-  const updatedData = req.body;
+
+  const updatedManager = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    workEmail: req.body.workEmail,
+    title: req.body.title,
+    division: req.body.division,
+    area: req.body.area,
+    jobType: req.body.jobType,
+  };
 
   try {
     const result = await getDatabase()
       .collection('Managers')
-      .updateOne({ _id: new ObjectId(id) }, { $set: updatedData });
+      .updateOne({ _id: new ObjectId(id) }, { $set: updatedManager });
 
     if (result.matchedCount === 0) {
       const error = new Error('Manager not found');

@@ -63,12 +63,21 @@ const createEmployee = async (req, res, next) => {
 
 const updateEmployee = async (req, res, next) => {
   const id = req.params.id;
-  const updatedData = req.body;
+
+  const updatedEmployee = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    workEmail: req.body.workEmail,
+    title: req.body.title,
+    division: req.body.division,
+    manager: req.body.manager,
+    jobType: req.body.jobType,
+  };
 
   try {
     const result = await getDatabase()
       .collection('Employees')
-      .updateOne({ _id: new ObjectId(id) }, { $set: updatedData });
+      .updateOne({ _id: new ObjectId(id) }, { $set: updatedEmployee });
 
     if (result.matchedCount === 0) {
       const error = new Error('Employee not found');
@@ -81,6 +90,7 @@ const updateEmployee = async (req, res, next) => {
     next(err);
   }
 };
+
 
 const deleteEmployee = async (req, res, next) => {
   const id = req.params.id;
