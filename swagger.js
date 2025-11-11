@@ -5,8 +5,8 @@ const doc = {
     title: 'Project 2 API',
     description: 'API for managing Managers and Employees',
   },
-  host: 'localhost:3005',
-  schemes: ['http'],
+  host: 'project2-api-lkcr.onrender.com',
+  schemes: ['https'],
 };
 
 const outputFile = './swagger.json';

@@ -5,10 +5,10 @@
     "description": "API for managing Managers and Employees",
     "version": "1.0.0"
   },
-  "host": "localhost:3005",
+  "host": "project2-api-lkcr.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/managers/": {
