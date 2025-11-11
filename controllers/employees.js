@@ -1,4 +1,6 @@
 const { getDatabase } = require('../db/database');
+const { ObjectId } = require('mongodb');
+
 
 const getAllEmployees = async (req, res) => {
   try {
@@ -9,18 +11,56 @@ const getAllEmployees = async (req, res) => {
   }
 };
 
-const createEmployee = async (req, res) => {
-  const employee = req.body;
-  if (!employee.name || !employee.email) {
-    return res.status(400).json({ message: 'Missing required fields' });
-  }
+const getEmployeeById = async (req, res) => {
+  const id = req.params.id;
 
   try {
-    const result = await getDatabase().collection('Employees').insertOne(employee);
-    res.status(201).json(result);
+    const employee = await getDatabase()
+      .collection('Employees')
+      .findOne({ _id: new ObjectId(id) });
+
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    res.status(200).json(employee);
   } catch (err) {
-    res.status(500).json({ message: 'Error creating employees' });
+    res.status(500).json({ message: 'Error fetching employee' });
   }
 };
 
-module.exports = { getAllEmployees, createEmployee };
+const createEmployee = async (req, res) => {
+  const employee = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    workEmail: req.body.workEmail,
+    title: req.body.title,
+    division: req.body.division,
+    manager: req.body.manager,
+    jobType: req.body.jobType,
+  };
+
+  try {
+    const response = await getDatabase()
+      .collection('Employees')
+      .insertOne(employee);
+
+    if (response.acknowledged) {
+      res.status(201).json({
+        message: 'Employee created successfully',
+        employeeId: response.insertedId,
+      });
+    } else {
+      res.status(500).json({
+        message: 'Error inserting employee',
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server error',
+      error: err.message,
+    });
+  }
+};
+
+module.exports = { getAllEmployees, createEmployee, getEmployeeById };

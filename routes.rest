@@ -1,6 +1,12 @@
 ###
 GET http://localhost:3005/managers
 ###
+
+GET http://localhost:3005/managers/69137d29e505f0227d31acf7
+
+###
+GET http://localhost:3005/employees/69137b84e505f0227d31acf6
+###
 POST http://localhost:3005/managers
 content-type: application/json
 
