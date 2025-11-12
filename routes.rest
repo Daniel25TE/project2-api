@@ -1,15 +1,14 @@
-###
+###********************************************Local Host********************************##############
+###  Get all the managers from the collection ###
 GET http://localhost:3005/managers
 ###
 
+### Get the specific manager by Id ###
 GET http://localhost:3005/managers/69137d29e505f0227d31acf7
 
-###
-GET http://localhost:3005/employees/69137b84e505f0227d31acf6
-###
+### Create a new manager ###
 POST http://localhost:3005/managers
 content-type: application/json
-
 
 {
     "firstName": "Bob2",
@@ -20,3 +19,135 @@ content-type: application/json
     "area": "West Utah",
     "jobType": "Full time"  
 }
+### Update an existing manager ###
+PUT http://localhost:3005/managers/69137d29e505f0227d31acf7
+content-type: application/json
+
+{
+    "firstName": "Bob2",
+    "lastName": "Hartley",
+    "workEmail": "bobhartley@blackbox.com",
+    "title": "Manager",
+    "division": "Software engineering",
+    "area": "West Utah",
+    "jobType": "Full time"  
+}
+
+### Delete an existing manager ###
+DELETE http://localhost:3005/managers/691390d5a82806d6e21016d8
+
+
+###********************************************Local Host********************************##############
+###  Get all the employees from the collection ###
+GET http://localhost:3005/employees
+###
+
+### Get the specific employee by Id ###
+GET http://localhost:3005/employees/691397075245ff1fee6efe9b
+
+### Create a new employee ###
+POST http://localhost:3005/employees
+content-type: application/json
+
+{
+    "firstName": "Bob2",
+    "lastName": "Hartley",
+    "workEmail": "bobhartley@blackbox.com",
+    "title": "Manager",
+    "division": "Software engineering",
+    "manager": "Patricio",
+    "jobType": "Full time"  
+}
+### Update an existing employee ###
+PUT http://localhost:3005/employees/69150014079ed1dd6c9b7b4b
+content-type: application/json
+
+{
+    "firstName": "Bob2",
+    "lastName": "Hartley",
+    "workEmail": "bobhartley@blackbox.com",
+    "title": "Manager",
+    "division": "Software engineering",
+    "manager": "West Utah",
+    "jobType": "Full time"  
+}
+
+### Delete an existing employee ###
+DELETE http://localhost:3005/employees/691390d5a82806d6e21016d8
+
+###*****************************************Production Envioronment********************************###
+
+###  Get all the employees from the collection ###
+GET https://project2-api-lkcr.onrender.com/employees
+###
+
+### Get the specific employee by Id ###
+GET https://project2-api-lkcr.onrender.com/employees/691397075245ff1fee6efe9b
+
+### Create a new employee ###
+POST https://project2-api-lkcr.onrender.com/employees
+content-type: application/json
+
+{
+    "firstName": "Bob2",
+    "lastName": "Hartley",
+    "workEmail": "bobhartley@blackbox.com",
+    "title": "Manager",
+    "division": "Software engineering",
+    "manager": "Patricio",
+    "jobType": "Full time"  
+}
+### Update an existing employee ###
+PUT https://project2-api-lkcr.onrender.com/employees/69150014079ed1dd6c9b7b4b
+content-type: application/json
+
+{
+    "firstName": "Bob2",
+    "lastName": "Hartley",
+    "workEmail": "bobhartley@blackbox.com",
+    "title": "Manager",
+    "division": "Software engineering",
+    "manager": "West Utah",
+    "jobType": "Full time"  
+}
+
+### Delete an existing employee ###
+DELETE https://project2-api-lkcr.onrender.com/employees/691390d5a82806d6e21016d8
+
+###********************************************Production Envioronment********************************##############
+###  Get all the managers from the collection ###
+GET https://project2-api-lkcr.onrender.com/managers
+###
+
+### Get the specific manager by Id ###
+GET https://project2-api-lkcr.onrender.com/managers/69137d29e505f0227d31acf7
+
+### Create a new manager ###
+POST https://project2-api-lkcr.onrender.com/managers
+content-type: application/json
+
+{
+    "firstName": "Bob2",
+    "lastName": "Hartley",
+    "workEmail": "bobhartley@blackbox.com",
+    "title": "Manager",
+    "division": "Software engineering",
+    "area": "West Utah",
+    "jobType": "Full time"  
+}
+### Update an existing manager ###
+PUT https://project2-api-lkcr.onrender.com/managers/69137d29e505f0227d31acf7
+content-type: application/json
+
+{
+    "firstName": "Bob2",
+    "lastName": "Hartley",
+    "workEmail": "bobhartley@blackbox.com",
+    "title": "Manager",
+    "division": "Software engineering",
+    "area": "West Utah",
+    "jobType": "Full time"  
+}
+
+### Delete an existing manager ###
+DELETE https://project2-api-lkcr.onrender.com/managers/691390d5a82806d6e21016d8
