@@ -6,5 +6,3 @@ router.use('/employees', require('./employees'));
 router.use('/', require('./swagger'));
 
 module.exports = router;
-
-

@@ -7,9 +7,7 @@
   },
   "host": "project2-api-lkcr.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "paths": {
     "/managers/": {
       "get": {

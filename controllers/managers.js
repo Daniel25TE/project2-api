@@ -3,7 +3,10 @@ const { getDatabase } = require('../db/database');
 
 const getAllManagers = async (req, res, next) => {
   try {
-    const managers = await getDatabase().collection('Managers').find().toArray();
+    const managers = await getDatabase()
+      .collection('Managers')
+      .find()
+      .toArray();
     res.status(200).json(managers);
   } catch (err) {
     next(err);
@@ -118,4 +121,3 @@ module.exports = {
   updateManager,
   deleteManager,
 };
-
