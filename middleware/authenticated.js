@@ -3,7 +3,7 @@ const isAuthenticated = (req, res, next) => {
     return next();
   }
 
-  return res.status(401).json({ message: "You are not authenticated" });
+  return res.status(401).json({ message: "You are not authenticated, please authenticate" });
 };
 
 module.exports = isAuthenticated;
