@@ -14,7 +14,6 @@ passport.use(
         const db = getDatabase();
         const usersCollection = db.collection('users');
 
-        // Check if user already exists
         let user = await usersCollection.findOne({ githubId: profile.id });
 
         if (!user) {
@@ -27,7 +26,7 @@ passport.use(
             displayName: profile.displayName,
             firstName,
             lastName,
-            role: 'customer', // default role
+            role: 'customer',
           };
 
           await usersCollection.insertOne(user);

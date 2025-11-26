@@ -157,7 +157,7 @@ GET https://project2-api-lkcr.onrender.com/users
 
 
 ### Update role in the users collection ###
-PUT https://project2-api-lkcr.onrender.com/users/123456789/role
+PUT https://project2-api-lkcr.onrender.com/users/186435595/role
 Content-Type: application/json
 
 {
