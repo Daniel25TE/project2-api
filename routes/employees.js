@@ -3,25 +3,29 @@ const router = express.Router();
 const employeesController = require('../controllers/employees');
 const validateEmployee = require('../middleware/validateEmployee');
 const validateId = require('../middleware/validateId');
-const isAuthenticated = require('../middleware/authenticated');
+//const isAuthenticated = require('../middleware/authenticated');
+const authorize = require('../middleware/authorize');
 
-router.get('/', employeesController.getAllEmployees);
+router.get('/', authorize('customer'), employeesController.getAllEmployees);
 
-router.get('/:id', validateId, employeesController.getEmployeeById);
+router.get('/:id', authorize('customer'), validateId, employeesController.getEmployeeById);
 
 router.post('/',
-  isAuthenticated,
+  authorize('customer'),
+  //isAuthenticated,
   validateEmployee, employeesController.createEmployee);
 
 router.put(
   '/:id',
-  isAuthenticated,
+  authorize('customer'),
+  //isAuthenticated,
   validateId,
   validateEmployee,
   employeesController.updateEmployee);
 
 router.delete('/:id',
-  isAuthenticated,
+  authorize('customer'),
+  //isAuthenticated,
   validateId,
   employeesController.deleteEmployee);
 
