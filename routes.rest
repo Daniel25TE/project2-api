@@ -78,7 +78,7 @@ DELETE http://localhost:3005/employees/691390d5a82806d6e21016d8
 ###*****************************************Production Envioronment********************************###
 
 ###  Get all the employees from the collection ###
-GET https://project2-api-lkcr.onrender.com/employees
+GET https://project2-api-lkcr.onrender.com/managers
 ###
 
 ### Get the specific employee by Id ###
@@ -151,3 +151,15 @@ content-type: application/json
 
 ### Delete an existing manager ###
 DELETE https://project2-api-lkcr.onrender.com/managers/691390d5a82806d6e21016d8
+
+### Get all the users from the Users collection ###
+GET https://project2-api-lkcr.onrender.com/users
+
+
+### Update role in the users collection ###
+PUT https://project2-api-lkcr.onrender.com/users/123456789/role
+Content-Type: application/json
+
+{
+  "role": "admin"
+}
