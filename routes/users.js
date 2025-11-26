@@ -3,7 +3,7 @@ const router = express.Router();
 const { getDatabase } = require('../db/database');
 
 // Update user role by GitHub ID
-router.put('/users/:githubId/role', async (req, res) => {
+router.put('/:githubId/role', async (req, res) => {
   try {
     const db = getDatabase();
     const usersCollection = db.collection('users');
@@ -28,7 +28,7 @@ router.put('/users/:githubId/role', async (req, res) => {
     res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
-router.get('/users', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const db = getDatabase();
     const usersCollection = db.collection('users');
